@@ -81,12 +81,14 @@ func ParseTestAnnotation(text []byte) (bool, *Snippet) {
 	lexer := newLexer()
 	scanner, err := lexer.Scanner(text)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return false, nil
 	}
 	parsedTokens := make(map[int]parsedToken)
 	for token, err, eof := scanner.Next(); !eof; token, err, eof = scanner.Next() {
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
+			return false, nil
 		}
 
 		token := token.(*lexmachine.Token)
